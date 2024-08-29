@@ -1,0 +1,184 @@
+{% extends "admin/change_form.html" %}
+
+{% block after_field_sets %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        background-color: #f4f4f4;
+        margin: 0;
+    }
+
+    h1 {
+        color: #333;
+    }
+
+    #qrcode {
+        margin-top: 20px;
+        padding: 10px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    input[type="text"] {
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 4px;
+        border: 1px solid #ddd;
+        width: 300px;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        color: #fff;
+        background-color: #007bff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 10px;
+        margin-right: 10px;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    .button-group {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+</style>
+<h1>QR Code Generator</h1>
+<input type="text" id="text" placeholder="Masa Numarası">
+<div class="button-group">
+    <button type="button" onclick="generateQRCode()">Generate QR Code</button>
+    <button type="button" onclick="generateMultipleQRCodePDF()">Download as PDF</button>
+</div>
+
+<div id="qrcode"></div>
+<div style="display: none;" id="qrcode2"></div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+<script>
+    let qrcode;
+
+    function generateQRCode() {
+        const qrCodeContainer = document.getElementById('qrcode');
+        qrCodeContainer.innerHTML = ""; // Önceki QR kodu temizle
+
+        const text = "https://" + window.location.hostname + "/?table=" + document.getElementById('text').value;
+        if (text.trim() === "") {
+            alert("Please enter some text or URL to generate QR code.");
+            return;
+        }
+
+        qrcode = new QRCode(qrCodeContainer, {
+            text: text,
+            width: 256,
+            height: 256,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+        });
+    }
+
+    function downloadPDF() {
+        if (!qrcode) {
+            alert("Please generate a QR code first.");
+            return;
+        }
+
+        const qrCodeCanvas = document.querySelector('#qrcode canvas');
+        if (!qrCodeCanvas) {
+            alert("QR code could not be found.");
+            return;
+        }
+
+        const qrCodeDataURL = qrCodeCanvas.toDataURL('image/png');
+        
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF();
+        
+
+        pdf.text("QR Code", 105, 20, null, null, 'center');
+        pdf.addImage(qrCodeDataURL, 'PNG', 55, 30, 100, 100);
+
+        pdf.save("qrcode.pdf");
+    }
+</script>
+
+<script>
+    function generateMultipleQRCodePDF() {
+    const { jsPDF } = window.jspdf;
+    
+    // Yeni bir PDF dökümanı oluştur
+    const pdf = new jsPDF();
+
+    // QR kodunu saklamak için geçici bir div oluştur
+    const qrCodeContainer = document.createElement('div');
+    qrCodeContainer.style.display = 'none';
+    document.body.appendChild(qrCodeContainer);
+
+    const baseText = "https://" + window.location.hostname + "/?table=";
+    if(document.getElementById('text').value === "")
+    {
+        alert("QR code could not be found.");
+        return;
+    }
+    // 5 sayfa için döngü
+         // QR kodlarını oluşturma ve PDF'e ekleme
+         for (let i = 1; i <= document.getElementById('text').value; i++) {
+            qrCodeContainer.innerHTML = ""; // Önceki QR kodunu temizle
+
+            const text = baseText + i; // Her sayfa için farklı bir table numarası
+            new QRCode(qrCodeContainer, {
+                text: text,
+                width: 256,
+                height: 256,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+
+            // QR kodunu canvas olarak al
+            const qrCanvas = qrCodeContainer.querySelector('canvas');
+            // Canvası PDF'e ekle
+            const imgData = qrCanvas.toDataURL('image/png');
+
+            if (i > 1) {
+                pdf.addPage(); // Yeni bir sayfa ekle
+            }
+
+            // Metni QR kodunun üstüne gelmemesi için konumlandır
+            const qrX = 20; // QR kodunun X koordinatı
+            const qrY = 40; // QR kodunun Y koordinatı
+            const qrWidth = 170; // QR kodunun genişliği
+            const qrHeight = 170; // QR kodunun yüksekliği
+            const textY = qrY - 10; // Metnin QR kodundan ne kadar yukarıda olacağını belirler
+
+            // QR kodunu PDF'e ekle
+            pdf.addImage(imgData, 'PNG', qrX, qrY, qrWidth, qrHeight); 
+
+            // Metni PDF'e ekle
+            pdf.setFontSize(16); // Daha büyük metin boyutu
+            pdf.setFont("Helvetica", "bold"); // Font ayarla (isteğe bağlı)
+            pdf.text(`Masa ${i}`, qrX, textY); // Metni PDF'e ekle
+        }
+    // Geçici div'i kaldır
+    document.body.removeChild(qrCodeContainer);
+
+    // PDF dosyasını kaydet
+    pdf.save("QR_Codes.pdf");
+}
+
+</script>
+{% endblock %}

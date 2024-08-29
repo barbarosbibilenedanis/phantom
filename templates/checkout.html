@@ -1,0 +1,304 @@
+{% extends 'base.html' %} {% load static %} {% block title %} Anasayfa - {{
+block.super }} {% endblock %} {% block body %}
+
+<div id="content">
+  <div class="page-title bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="bg-image bg-fixed">
+          <img src="{{tenant.slider.url}}" alt="" />
+        </div>
+        <div class="col-lg-8 offset-lg-4" bg>
+          <br />
+          <h3 class="mb-0" style="color: white !important">{{tenant.name}}</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <hr />
+    <h3 class="text-center">Ödeme Formu</h3>
+    <hr />
+    <div class="row">
+      <!-- Product List Section -->
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header text-center">
+            <h4>Ürünler</h4>
+          </div>
+          <div class="card-body">
+            <!-- Product Items -->
+            <div class="panel-cart-container">
+              <div class="panel-cart-title">
+                <h5 class="title">Sepetim</h5>
+              </div>
+              <div class="panel-cart-content cart-details">
+                <table class="cart-tables">
+                  <!-- Cart items will be dynamically inserted here -->
+                </table>
+                <div class="cart-summary">
+                  <div class="row">
+                    <div class="col-7 text-right text-muted">Toplam Fiyat:</div>
+                    <div class="col-5">
+                      <strong
+                        >₺ <span class="cart-products-total">0.00</span></strong
+                      >
+                    </div>
+                  </div>
+                  <hr class="hr-sm" />
+                  <div class="row text-lg">
+                    <div class="col-7 text-right text-muted">Total:</div>
+                    <div class="col-5">
+                      <strong
+                        >₺ <span class="cart-products-total">0.00</span></strong
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <style>
+              .cart-tables img {
+                width: 100%; /* Genişliği konteynıra uyar */
+                height: 80px; /* Sabit bir yükseklik belirler */
+                object-fit: cover; /* Resmin boyutlandırma sırasında orantısını korumasını sağlar */
+              }
+            </style>
+            <!-- Add more products similarly -->
+          </div>
+          <div class="card-footer text-right">
+            <strong
+              >Toplam Fiyat: ₺
+              <span class="cart-products-total">0</span></strong
+            >
+          </div>
+        </div>
+        <div class="container">
+          <h3>Yorumunuzu Girin</h3>
+          <textarea
+            class="form-control"
+            id="commentInput"
+            placeholder="Yorumunuzu buraya yazın..."
+          ></textarea>
+          <button
+            onclick="saveComment()"
+            class="btn btn-default btn-lg btn-block"
+            id="saveButton"
+          >
+            Yorum Kaydet
+          </button>
+          <p id="savedComment"></p>
+        </div>
+      </div>
+      <script>
+        function setCookie(cname, cvalue, exdays) {
+          const d = new Date();
+          d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+          let expires = "expires=" + d.toUTCString();
+          document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+
+        function getCookie(cname) {
+          let name = cname + "=";
+          let decodedCookie = decodeURIComponent(document.cookie);
+          let ca = decodedCookie.split(";");
+          for (let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) === " ") {
+              c = c.substring(1);
+            }
+            if (c.indexOf(name) === 0) {
+              return c.substring(name.length, c.length);
+            }
+          }
+          return "";
+        }
+
+        function saveComment() {
+          const comment = document.getElementById("commentInput").value;
+          setCookie("comment", comment, 7); // Çerezi 7 gün geçerli yap
+          document.getElementById(
+            "savedComment"
+          ).innerText = `Yorumunuz kaydedildi: ${comment}`;
+        }
+
+        window.onload = function () {
+          const savedComment = getCookie("comment");
+          if (savedComment) {
+            document.getElementById(
+              "savedComment"
+            ).innerText = `Önceki Yorum: ${savedComment}`;
+          }
+        };
+      </script>
+      <!-- Payment Form Section -->
+      <div class="col-md-6" style="padding-bottom: 13rem">
+        <span class="anchor" id="formPayment"></span>
+        <div class="card card-outline-secondary">
+          <div class="card-body">
+            <form class="form" role="form" autocomplete="off">
+              <div class="form-group">
+                <label for="cc_name">Kartın Sahibi</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="cc_name"
+                  title="First and last name"
+                  required="required"
+                />
+              </div>
+              <div class="form-group">
+                <label>Kart Numarası</label>
+                <input
+                  type="text"
+                  id="cc_number"
+                  class="form-control"
+                  autocomplete="off"
+                  maxlength="20"
+                  pattern="\d{16}"
+                  title="Credit card number"
+                  required=""
+                />
+              </div>
+              <div class="form-group row">
+                <label class="col-md-12">Kart Bitiş Tarihi</label>
+                <div class="col-md-4 mt-1">
+                  <select class="form-control" name="cc_exp_mo" size="0">
+                    <option value="01">01</option>
+                    <option value="02">02</option>
+                    <option value="03">03</option>
+                    <option value="04">04</option>
+                    <option value="05">05</option>
+                    <option value="06">06</option>
+                    <option value="07">07</option>
+                    <option value="08">08</option>
+                    <option value="09">09</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <!-- Add other months here -->
+                  </select>
+                </div>
+                <div class="col-md-4 mt-1">
+                  <select class="form-control" name="cc_exp_yr" size="0">
+                    <option>2024</option>
+                    <option>2025</option>
+                    <option>2026</option>
+                    <option>2027</option>
+                    <option>2028</option>
+                    <option>2029</option>
+                    <option>2030</option>
+                  </select>
+                </div>
+                <div class="col-md-4 mt-1">
+                  <input
+                    type="text"
+                    id="cc_cvc"
+                    class="form-control"
+                    autocomplete="off"
+                    maxlength="3"
+                    pattern="\d{3}"
+                    title="Three digits at back of your card"
+                    required=""
+                    placeholder="CVC"
+                  />
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                  <input
+                    type="checkbox"
+                    class="custom-control-input"
+                    id="agreement"
+                    required
+                  />
+
+                  <label class="custom-control-label" for="agreement"
+                    ><a
+                      href="{% static 'mesafelisatissozlesmesi.pdf' %}"
+                      style="color: blue"
+                    >
+                      Mesafeli Satış Sözleşmesi'ni okudum ve kabul ediyorum</a
+                    ></label
+                  >
+                </div>
+              </div>
+              <hr />
+              <div class="col-md-6">
+                <button type="submit" class="btn btn-success btn-lg">
+                  Hemen Öde
+                </button>
+              </div>
+              <div class="form-group row">
+                <div class="col-md-6">
+                  <button type="reset" class="btn btn-default btn-lg btn-block">
+                    İptal
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="response-container"></div>
+
+  <script>
+    $(document).ready(function () {
+      document.cookie =
+        "comment" + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+      $(".form").on("submit", function (e) {
+        e.preventDefault();
+
+        // Check if the agreement is accepted
+        if (!$("#agreement").is(":checked")) {
+          alert("Lütfen  Satış Sözleşmesi'ni kabul edin.");
+          return false;
+        }
+
+        // Validate card information
+        const cardNumber = $("#cc_number").val().replace(/\s+/g, "");
+        const cardName = $("#cc_name").val();
+        const cardExpiryMonth = $('[name="cc_exp_mo"]').val();
+        const cardExpiryYear = $('[name="cc_exp_yr"]').val();
+        const cardCVC = $("#cc_cvc").val();
+
+        if (
+          !cardNumber ||
+          !cardName ||
+          !cardExpiryMonth ||
+          !cardExpiryYear ||
+          !cardCVC
+        ) {
+          debugger;
+          alert("Lütfen tüm kredi kartı bilgilerini doldurun.");
+          return false;
+        }
+
+        // Submit the form via AJAX
+        $.ajax({
+          url: "{% url 'place_order' %}",
+          method: "POST",
+          data: {
+            card_number: cardNumber,
+            card_name: cardName,
+            card_expiry: cardExpiryMonth + "/" + cardExpiryYear.slice(-2),
+            card_cvc: cardCVC,
+            csrfmiddlewaretoken: "{{ csrf_token }}",
+          },
+          success: function (data) {
+            $("#response-container").html(data);
+          },
+          error: function (error) {
+            alert("Sipariş verilirken bir hata oluştu. Lütfen tekrar deneyin.");
+          },
+        });
+      });
+    });
+  </script>
+</div>
+{% include 'components/cart.html' %} {% endblock %}

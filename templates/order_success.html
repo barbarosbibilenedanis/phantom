@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Anasayfa - {{ block.super }}
+{% endblock %}
+
+{% block body %}
+<div id="content">
+
+    <!-- Page Title -->
+    <div class="page-title bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="bg-image bg-fixed">
+                    <img src="{{tenant.slider.url}}" alt="">
+                  </div>
+                <div class="col-lg-8 offset-lg-4" bg>
+                    <h3 class="mb-0" style="color: white!important;">
+                        {{tenant.name}}
+                    </h1>                   
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page Content -->
+    <div class="page-content">
+        <div class="container">
+            <div class="row no-gutters">
+
+
+    <h1>Siparişiniz Başarıyla Alındı!</h1>
+</div>
+</div>
+</div>
+{% include 'components/cart.html' %}
+
+{% endblock %}

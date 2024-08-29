@@ -1,0 +1,382 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Site made with Mobirise Website Builder v5.9.18, https://mobirise.com -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="generator" content="Mobirise v5.9.18, mobirise.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+    <link rel="shortcut icon" href="{{tenant.logo.url}}" type="image/x-icon">
+    <meta name="description" content="">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <title>Phantom Waitress</title>
+    <link rel="preload"
+    href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;700&display=swap&display=swap" as="style"
+    onload="this.onload=null;this.rel='stylesheet'">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
+<noscript>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;700&display=swap&display=swap">
+</noscript>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+<link rel="stylesheet" href="{% static 'dist/css/core.css' %}">
+<link id="theme" rel="stylesheet" href="{% static 'dist/css/theme-red.css' %}">
+<script src="https://unpkg.com/jsqr/dist/jsQR.js"></script>
+
+</head>
+
+<body>
+  <div>
+    
+  
+  </div>
+  <div class="">
+    <div id="body-wrapper" class="animsition header-absolute">
+      <!-- Header -->
+     <div class="erselerdogan">
+      <header id="header" class="absolute" >
+        
+        <div class="container">
+          <div class="row">
+            <div class="col-md-3">
+              <!-- Logo -->
+              <div class="module module-logo light erselerdogan">
+                <a href="{%url 'index'%}">
+                  <img src="{{tenant.logo.url}}" alt="" width="88">
+                </a>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <a href="#" class="module module-cart right" data-toggle="panel-cart">
+                <span class="cart-icon">
+                  <i class="ti ti-shopping-cart"></i>
+                </span>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </header>
+     </div>
+      <div class="emrekarakas">
+        <header id="header" class="absolute transparent "style="background-color: rgba(0, 0, 0, 0.484);">
+
+          <div class="container">
+              <div class="row">
+                  <div class="col-md-3">
+                      <!-- Logo -->
+                      <div class="module module-logo dark">
+                          <a href="{%url 'index'%}">
+                              <img src="{{tenant.logo.url}}" alt="" width="88">
+                          </a>
+                      </div>
+                  </div>
+                  <div class="col-md-7">
+                      <!-- Navigation -->
+                      <nav class="module module-navigation left mr-4">
+                          <ul id="nav-main" class="nav nav-main">
+                              <li class="">
+                                  <a href="{%url 'index'%}" style="color: rgb(255, 255, 255);">Anasayfa</a>
+                              </li>
+                              <li class="has-dropdown">
+                                  <a href="{% url 'about' %}" style="color: rgb(255, 255, 255);">Hakkımızda</a>
+                                  <div class="dropdown-container">
+                                    <ul>
+                                      <li class="">
+                                        <a href="{% url 'about' %}">Hakkımızda</a>
+                                    </li>
+                                        <li class="" >
+                                            <a href="{% static 'ticaretsicil.pdf' %}" target="_blank">Ticaret Sicil ve Mersis No Bilgileri</a>
+                                        </li>
+                                        <li class="">
+                                            <a href="{% static 'mesafelisatissozlesmesi.pdf' %}" target="_blank">Mesafeli Satış Sözleşmesi</a>
+                                        </li>
+                                        <li class="">
+                                          <a href="{% static 'kisisilveriler.pdf' %}" target="_blank">Kişisel Verilerin Korunması Politikası</a>
+                                      </li>
+                                      <li class="">
+                                        <a href="{% static 'iptaliade.pdf' %}" target="_blank">İptal,İade ve Teslimat Politikası</a>
+                                    </li>
+                                    <li class="">
+                                      <a href="{% static 'gizlilik.pdf' %}" target="_blank">Gizlilik ve Güvenlik Politikası</a>
+                                  </li>
+                                    </ul>
+                                </div>
+                              </li>
+                              <li><a href="{% url 'contact' %}" style="color: rgb(255, 255, 255);">İletişim</a></li>
+                       
+                          </ul>
+                      </nav>
+                      <div class="module left">
+                          <a href="{% url 'category_with_products' %}" class="btn btn-primary"><span> Menü</span></a>
+                      </div>
+
+                      {% if user.is_authenticated %}
+
+                      <div class="module ">
+                        <a style="background-color: black;" href="{% url 'admin:index' %}" class="btn btn-primary"><span>Admin</span></a>
+                    </div>
+                  {% endif %}
+                  </div>
+                  <div class="col-md-2">
+                      <a href="#" class="module module-cart right" data-toggle="panel-cart">
+                          <span class="cart-icon">
+                              <i class="ti ti-shopping-cart"></i>
+                              <span class="notification">0</span>
+                          </span>
+                          <span class="cart-value"><span class="value">0.00</span></span>
+                      </a>
+                  </div>
+              </div>
+          </div>
+    
+      </header>
+      </div>
+      
+      <!-- Header / End -->
+      <!-- Header -->
+      <div class="erselerdogan">
+        <header id="header-mobile" class="light d-flex justify-content-between align-items-center">
+          <!-- Cart Total -->
+
+          <!-- Menü Butonu -->
+          <div style="font-size: 1.7rem !important; display: inline-block !important; margin-left: 20px !important; color: #000000 !important;">
+            <a href="{% url 'category_with_products' %}"> 
+             <i class="fa-solid fa-bars"></i>
+            </a>
+          </div>
+
+          <!-- Shopping Cart Logo -->
+          <a href="#" class="module module-cart" data-toggle="panel-cart">
+          
+          <span class="notification "></span>
+          <i class="ti ti-shopping-cart cart-value"></i>
+          </a>
+      </header>
+    </div>
+    
+      
+{% block body %} 
+
+{% endblock %}
+<div class="erselerdogan">
+  <footer id="footer" class="bg-dark dark" style="background-color: #d66565 !important;   
+  width: 100%;
+  bottom: 0;">
+  <div class="container">
+    <!-- Footer 2nd Row -->
+    <div class="col-12 text-center mt-3">
+      <img src="/kart-bilgileri.png" alt="">
+    </div>
+    <div class="col-12  mt-3 m-3" style="text-align: left;" >
+      <ul style="list-style-type: disclosure-closed;">
+        <li class="" >
+          <a href="{% static 'ticaretsicil.pdf' %}" target="_blank">Ticaret Sicil ve Mersis No Bilgileri</a>
+      </li>
+      <li class="">
+          <a href="{% static 'mesafelisatissozlesmesi.pdf' %}" target="_blank">Mesafeli Satış Sözleşmesi</a>
+      </li>
+      <li class="">
+        <a href="{% static 'kisisilveriler.pdf' %}" target="_blank">Kişisel Verilerin Korunması Politikası</a>
+    </li>
+    <li class="">
+      <a href="{% static 'iptaliade.pdf' %}" target="_blank">İptal,İade ve Teslimat Politikası</a>
+  </li>
+  <li class="">
+    <a href="{% static 'gizlilik.pdf' %}" target="_blank">Gizlilik ve Güvenlik Politikası</a>
+</li>
+      </ul>  
+      </div>
+    <div class="footer-second-row">
+      <span class="text-center d-flex justify-content-center">Copyright Phantom Waitress 2024©.</span>
+    </div>
+  </div>
+  <!-- Back To Top -->
+  <button id="back-to-top" class="back-to-top">
+    <i class="ti ti-angle-up"></i>
+  </button>
+  </footer>
+</div>
+<div class="emrekarakas">
+  <footer id="footer" class="bg-dark dark">
+
+    <div class="container">
+        <!-- Footer 1st Row -->
+        <!-- Footer 2nd Row -->
+        <div class="footer-second-row">
+          <div class="row">
+            <div class="col-12 text-center">
+              <img src="/kart-bilgileri.png" alt="">
+            </div>
+        
+              <div class="col-12 text-center mt-2">
+                <span class="text-muted">Copyright Bibilenedanis 2020©.</span>
+              </div>
+          </div>
+            
+        </div>
+    </div>
+
+    <!-- Back To Top -->
+    <button id="back-to-top" class="back-to-top"><i class="ti ti-angle-up"></i></button>
+
+</footer>
+</div>
+
+</div>
+  </div>
+     <!-- Modal -->
+     <div class="modal fade" id="cookieModal" tabindex="-1" role="dialog" aria-labelledby="cookieModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="cookieModalLabel">Uyarı</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  Lütfen QR ile masayı okutunuz.
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-dismiss="modal">Tamam</button>
+              </div>
+          </div>
+      </div>
+  </div>
+</body>
+<script src="{% static "dist/js/core.js" %}"></script>
+{% if request.GET.table %}
+    <script>
+      $(document).ready(function() {
+        updateCart();
+      });
+        // Query parametresi mevcutsa, JavaScript ile işlemleri yap.
+        document.addEventListener('DOMContentLoaded', function() {
+            var tableValue = "{{ request.GET.table }}";
+
+            // Cookie'yi yazan fonksiyonu çağır
+            setCookie('table', tableValue, 1); // 7 gün geçerli bir cookie olarak ayarlar
+        });
+
+        function setCookie(name, value, days) {
+            var expires = "";
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "") + expires + "; path=/";
+        }
+    </script>
+{% endif %}
+<style>
+
+  
+</style>
+<script>
+
+
+  window.onload = function() {
+    // Sayfa yüklendiğinde bildirim izni kontrolü ve otomatik bildirim ayarla
+    if (Notification.permission === 'granted' || Notification.permission === 'default') {
+        // Bildirim izin durumu 'granted' veya 'default' ise 30 saniyede bir bildirim gönder
+        setInterval(showNotification, 30000); // 30000 ms = 30 saniye
+    } else {
+        console.log('Bildirim izni verilmemiş.');
+    }
+}
+  document.addEventListener('DOMContentLoaded', () => {
+      // Ajax isteği gönder
+      fetch('/notification/', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+              'X-Requested-With': 'XMLHttpRequest',
+              'X-CSRFToken': getCookie('csrftoken')  // Django'nun CSRF token'ını almak için bir fonksiyon
+          },
+          body: JSON.stringify({})
+      })
+      .then(response => response.json())
+      .then(data => {
+          if (data.message === 'Ürününüz hazır, kasadan bekleniyorsunuz!') {
+              alert("Ürününüz hazır, kasadan bekleniyorsunuz!")
+              if (Notification.permission === 'default') {
+                  Notification.requestPermission().then(permission => {
+                      if (permission === 'granted') {
+                          showNotification();
+                      }
+                  });
+              } else if (Notification.permission === 'granted') {
+                  showNotification();
+              }
+          }
+      })
+      .catch(error => console.error('Hata:', error));
+  });
+
+  // Bildirim gönderme fonksiyonu
+  function showNotification() {
+      const notification = new Notification('Bildirim Başlığı', {
+          body: 'Ürününüz hazır, kasadan bekleniyorsunuz!',
+ // Bildirim simgesi (isteğe bağlı)
+      });
+      notification.onclick = () => {
+      };
+  }
+
+  // CSRF token'ını almak için yardımcı fonksiyon
+  function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+          const cookies = document.cookie.split(';');
+          for (let i = 0; i < cookies.length; i++) {
+              const cookie = cookies[i].trim();
+              if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+              }
+          }
+      }
+      return cookieValue;
+  }
+</script>
+
+<script>
+  $(document).ready(function() {
+      // Çerezleri almak için yardımcı fonksiyon
+      function getCookie(name) {
+          let cookieValue = null;
+          if (document.cookie && document.cookie !== '') {
+              let cookies = document.cookie.split(';');
+              for (let i = 0; i < cookies.length; i++) {
+                  let cookie = cookies[i].trim();
+                  // İlgili cookie'yi bul
+                  if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                      cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                      break;
+                  }
+              }
+          }
+          return cookieValue;
+      }
+
+      // Çerez kontrolü yapacak fonksiyon
+      function checkTableCookie() {
+          let tableCookie = getCookie('table');
+          if (!tableCookie) {
+              // Eğer cookie mevcut değilse, uyarı popup'ını göster
+              alert('Lütfen QR ile masayı okutunuz');
+          }
+      }
+
+      // Sayfa yüklendiğinde çerez kontrolünü yap
+      checkTableCookie();
+  });
+</script>
+</html>

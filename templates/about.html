@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Hakkimizda - {{ block.super }}
+{% endblock %}
+
+{% block body %}
+
+
+
+
+<div id="content" class="mt-5">
+
+    <!-- Page Title -->
+
+    <!-- Section -->
+    <section class="section section-bg-edge mt-5">
+        <div class="container">
+            <div class="col-12 mt-5">
+                <h3>Hakkımızda</h3>
+                <p class="lead">Phantom Waitress, restoran ve kafelerin dijital dönüşümünü hızlandırmak, hizmet kalitesini artırmak ve müşteri memnuniyetini en üst seviyeye çıkarmak amacıyla geliştirilen yenilikçi bir dijital yönetim ve sipariş sistemidir. Modern teknolojiyi, kullanıcı dostu arayüzlerle buluşturarak hem müşterilere hem de işletmelere eşsiz bir deneyim sunuyoruz.
+                </p>
+                <h3>Misyonumuz</h3>
+                <p>Misyonumuz, restoran ve kafelerin operasyonel verimliliğini artırırken, müşterilere hızlı, güvenli ve kolay bir sipariş deneyimi sunmaktır. Phantom Waitress olarak, sipariş verme, garson çağırma ve hesap ödeme gibi süreçleri dijitalleştirerek, hem işletmelerin iş yükünü hafifletiyor hem de müşterilere sorunsuz bir hizmet sunuyoruz.
+                </p>
+                <h3>Vizyonumuz</h3>
+                <p>Phantom Waitress’in vizyonu, dijitalleşen dünyada restoran ve kafe işletmelerine liderlik etmek ve sektörde örnek bir çözüm sunmaktır. Amacımız, yenilikçi teknolojilerle donatılmış bir platform oluşturarak, işletmelerin operasyonel süreçlerini kolaylaştırmak ve müşteri memnuniyetini en üst seviyeye çıkarmaktır.
+                </p>
+                <h3>Değerlerimiz
+                </h3>
+                <ul>
+                    <li>Kullanıcı Dostu Deneyim: Her adımda müşterilerimizin ve işletmelerin ihtiyaçlarını göz önünde bulundurarak, kolay ve etkili bir kullanıcı deneyimi sunuyoruz.
+                    </li>
+                    <li>Güvenlik ve Güvenilirlik: Phantom Waitress, QR kodlar ve konum doğrulama servisleri ile sahtekarlık girişimlerini önler ve güvenliği en üst düzeyde tutar.
+                    </li>
+                    <li>Yenilikçilik ve Sürekli Gelişim: Teknolojiyi en ileri seviyede kullanarak, platformumuzu sürekli geliştiriyor ve güncelliyoruz. İşletmelerin ve müşterilerin beklentilerine her zaman yanıt verebilmek için kendimizi sürekli yeniliyoruz.
+                    </li>
+                </ul>
+                <h3>Hizmetlerimiz</h3>
+                <p>Phantom Waitress, sipariş verme, garson çağırma, hesap ödeme ve masa değiştirme gibi temel işlevlerin yanı sıra, yönetim paneli üzerinden işletmelerin menü yönetimi, tema özelleştirme ve raporlama gibi ihtiyaçlarına da yanıt verir. Bu sayede, restoran ve kafeler, iş süreçlerini daha verimli bir şekilde yönetebilir ve müşteri deneyimini iyileştirebilirler.
+                </p>
+                <h3>Biz Kimiz?
+                </h3>
+                <p>Phantom Waitress ekibi, teknoloji ve restoran sektörlerinde uzmanlaşmış profesyonellerden oluşur. Amacımız, işletmelerin dijitalleşme sürecinde yanlarında olmak ve sektördeki en iyi çözümleri sunmaktır.</p>
+                <h3>Bize Katılın
+                </h3>
+                <p>Phantom Waitress ile, restoran ve kafe işletmenizi bir üst seviyeye taşıyın. Teknoloji ile hizmeti buluşturan bu yenilikçi platformu keşfedin ve müşterilerinize benzersiz bir deneyim sunmaya başlayın</p>
+            
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Section -->
+    <section class="section section-lg dark bg-dark">
+
+        <!-- BG Image -->
+        <div class="bg-image bg-parallax"><img src="{{tenant.logo.url}}" alt=""></div>
+
+        <div class="container text-center">
+            <div class="col-lg-8 offset-lg-2">
+                <h2 class="mb-3">Bizimle Hala Tanışmadınız mı ?</h2>
+                <h5 class="text-muted">Hemen rezervasyon yapın veya online sipariş verin!</h5>
+                <a href="{% url 'category_with_products' %}" class="btn btn-primary" style="text-transform: unset !important;"><span>Sipariş Verin</span></a>
+                <a href="{% url 'contact' %}" class="btn btn-outline-primary" style="text-transform: unset !important;"><span>İletişim</span></a>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Footer -->
+   
+
+</div>
+
+
+
+{% include 'components/cart.html' %}
+{% endblock %}

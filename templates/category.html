@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Kategori - {{ block.super }}
+{% endblock %}
+
+{% block body %}
+<script>
+    $(document).ready(function() {
+        // Sepete ekle butonuna tıklama olayını dinle
+        $('button[data-action="open-cart-modal"]').on('click', function() {
+            var productId = $(this).data('id');
+            var quantity = 1;  // Varsayılan miktar
+
+            // AJAX isteği gönder
+            $.ajax({
+                url: '{% url "add_to_cart" %}',  // URL
+                type: 'POST',
+                data: {
+                    'product_id': productId,
+                    'quantity': quantity,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'  // CSRF token
+                },
+                success: function(response) {
+                    // Başarılı yanıt durumunda yapılacak işlemler                    
+                    updateCart();
+                },
+                error: function(xhr, errmsg, err) {
+                    // Hata durumunda yapılacak işlemler
+                    alert('Bir hata oluştu. Lütfen tekrar deneyin.');
+                }
+            });
+        });
+    });
+  </script>
+  <!-- Content -->
+  <div id="content" style="padding-bottom: 12rem;">
+
+
+    <div class="erselerdogan">
+        <div class="page-title bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class="bg-image bg-fixed">
+                        <img src="{{tenant.slider.url}}" alt="">
+                      </div>
+                    <div class="col-lg-8 offset-lg-4" bg>
+                        <h3 class="mb-0" style="color: white!important;">
+                            {{tenant.name}}
+                        </h1>                   
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Page Content -->
+        <div class="page-content">
+            <div class="container">
+                <div class="row no-gutters">
+                    <div class="col-md-10 offset-md-1" role="tablist">
+                        <!-- Menu Category / Burgers -->
+                        {% for category, products in category_product_map.items %}
+                        <div id="{{ category.slug }}" class="menu-category">
+                            <div class="menu-category-title collapse-toggle" role="tab" data-target="#menu{{ category.slug }}Content" data-toggle="collapse" aria-expanded="true">
+                                <div class="bg-image"><img src="{{ category.image.url }}" alt=""></div>
+                                <h2 class="title">{{ category.name }}</h2>
+                            </div>
+                            <div id="menu{{ category.slug }}Content" class="menu-category-content collapse show">
+                                <div class="p-4">
+                                    <div class="row gutters-sm">
+    
+                                        {% for product in products %}
+                                        <div class="col-lg-4 col-6">
+                                            <!-- Menu Item -->
+                                            <div class="menu-item menu-grid-item">
+                                                <img class="mb-4" src="{{ product.image.url }}" alt="">
+                                                <h6 class="mb-0">{{ product.name }}</h6>
+                                                <span class="text-muted text-sm">{{ product.description }}</span>
+                                                <div class="row align-items-center mt-4">
+                                                    <div class="col-sm-6"><span class="text-md mr-4"><span class="text-muted">Fiyat</span> {{ product.price }}₺</span></span></div>
+                                                    <div class="col-sm-6 text-sm-right mt-2 mt-sm-0">
+                                                        <button class="btn btn-outline-secondary btn-sm" data-action="open-cart-modal" data-id="{{ product.id }}">
+                                                            <span>SEPETE EKLE</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        
+                                        </div>
+                                        {%endfor%}
+                                        <style>
+                                            .menu-item img {
+                                                width: 100%; /* Genişliği konteynıra uyar */
+                                                height: 200px; /* Sabit bir yükseklik belirler */
+                                                object-fit: cover; /* Resmin boyutlandırma sırasında orantısını korumasını sağlar */
+                                            }
+                                        </style>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="emrekarakas" style="padding-top: 14rem;">
+        
+        <div class="page-title bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12" style="text-align: center;">
+                        <h1 class="mb-0">Menü</h1>
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page-content">
+            <div class="container">
+                <div class="row no-gutters">
+                    
+                    <div class="col-md-10 offset-md-1" role="tablist">
+                        
+                        <!-- Menu Category / Burgers -->
+                        {% for category, products in category_product_map.items %}
+                        <div id="{{ category.slug }}" class="menu-category">
+                            <div class="menu-category-title collapse-toggle" role="tab" data-target="#menu{{ category.slug }}Content" data-toggle="collapse" aria-expanded="true">
+                                <div class="bg-image"><img src="{{ category.image.url }}" alt=""></div>
+                                <h2 class="title">{{ category.name }}</h2>
+                            </div>
+                            <div id="menu{{ category.slug }}Content" class="menu-category-content collapse show">
+                                <div class="p-4">
+                                    <div class="row gutters-sm">
+    
+                                        {% for product in products %}
+                                        <div class="col-lg-4 col-6">
+                                            <!-- Menu Item -->
+                                            <div class="menu-item menu-grid-item">
+                                                <img class="mb-4" src="{{ product.image.url }}" alt="">
+                                                <h6 class="mb-0">{{ product.name }}</h6>
+                                                <span class="text-muted text-sm">{{ product.description }}</span>
+                                                <div class="row align-items-center mt-4">
+                                                    <div class="col-sm-6"><span class="text-md mr-4"><span class="text-muted">Fiyat</span> {{ product.price }}₺</span></span></div>
+                                                    <div class="col-sm-6 text-sm-right mt-2 mt-sm-0">
+                                                        <button class="btn btn-outline-secondary btn-sm" data-action="open-cart-modal" data-id="{{ product.id }}">
+                                                            <span>SEPETE EKLE</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        
+                                        </div>
+                                        {%endfor%}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                      
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Page Title -->
+    
+
+    <!-- Footer -->
+
+    <!-- Footer / End -->
+    {% include 'components/cart.html' %}
+{% endblock %}

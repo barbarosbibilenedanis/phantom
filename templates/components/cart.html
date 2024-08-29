@@ -1,0 +1,181 @@
+<!-- Panel Cart -->
+<div id="panel-cart">
+    <div class="panel-cart-container">
+        <div class="panel-cart-title">
+            <h5 class="title">Sepetim</h5>
+            <button class="close" data-toggle="panel-cart">
+                <i class="ti ti-close"></i>
+            </button>
+        </div>
+        <div class="panel-cart-content cart-details">
+            <table class="cart-tables">
+                <!-- Cart items will be dynamically inserted here -->
+            </table>
+            <div class="cart-summary">
+                <div class="row">
+                    <div class="col-7 text-right text-muted">Toplam Fiyat:</div>
+                    <div class="col-5">
+                        <strong>₺ <span class="cart-products-total">0.00</span></strong>
+                    </div>
+                </div>
+                <hr class="hr-sm">
+                <div class="row text-lg">
+                    <div class="col-7 text-right text-muted">Total:</div>
+                    <div class="col-5">
+                        <strong>₺ <span class="cart-total">0.00</span></strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="{% url 'checkout' %}" class="panel-cart-action btn btn-secondary btn-block btn-lg">
+        <span>Ödemeye Geç</span>
+    </a>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+function updateCart() {
+    $.ajax({
+        url: "{% url 'ajax_get_cart' %}",
+        method: "GET",
+        success: function(data) {
+            if (!data || !data.items) {
+                console.error('Sepet verisi boş veya geçersiz.');
+                return;
+            }
+
+            let cartItemsHTML = '';
+            let totalPrice = data.total_price || 0.00;
+            let itemCount = data.item_count || 0;
+
+            if (itemCount > 0) {
+                data.items.forEach(function(item) {
+                    cartItemsHTML += `
+                        <tr data-cart-item-id="${item.id}">
+                            <td> 
+                            <img src= ${item.image}/>   
+                            </td>
+                            <td class="title">
+                                <span class="name"><a href="#">${item.name}</a></span>
+                                <span class="caption text-muted">Adet: ${item.quantity}</span>
+                            </td>
+                            <td class="price">₺${item.total_price}</td>
+                            <td class="actions">
+                                <a href="#" class="action-icon reduce-quantity" data-id="${item.id}"><i class="ti ti-minus"></i></a>
+                                <a href="#" class="action-icon plus-quantity" data-id="${item.id}"><i class="ti ti-plus"></i></a>
+                                <a href="#" class="action-icon remove-item" data-id="${item.id}"><i class="ti ti-close"></i></a>
+                            </td>
+                        </tr>`;
+                });
+            } else {
+                cartItemsHTML = `
+                <tr>
+                    <td colspan="3" class="cart-empty">
+                        <i class="ti ti-shopping-cart"></i>
+                        <p>Sepetiniz Boş.</p>
+                    </td>
+                </tr>`;
+            }
+
+            $('.cart-tables').html(cartItemsHTML);
+            $('.cart-products-total').text(totalPrice);
+            $('.cart-value').text(totalPrice);
+        },
+        error: function(error) {
+            console.log('Error:', error);
+        }
+    });
+}
+
+    $(document).ready(function() {
+        updateCart();
+        // Sepet paneli açıldığında sepeti güncelle
+        $('button[data-toggle="panel-cart"]').click(function() {
+            updateCart();
+        });
+
+        // Ürün sepete eklendiğinde sepeti güncelle
+        $('.add-to-cart-button').click(function() {
+            const productId = $(this).data('product-id');
+            const quantity = 1; // Miktarı buradan güncelleyebilirsiniz
+            $.post("{% url 'add_to_cart' %}", {
+                product_id: productId,
+                quantity: quantity,
+                csrfmiddlewaretoken: '{{ csrf_token }}'  // CSRF token
+            })
+            .done(function() {
+                updateCart();
+            })
+            .fail(function() {
+                updateCart();
+
+                console.log('Error adding item to cart');
+            });
+            console.log('Update cart');
+
+            updateCart();
+        });
+
+        // Ürün adedini düşürme işlemi
+        $(document).on('click', '.reduce-quantity', function(e) {
+            e.preventDefault();
+            const itemId = $(this).data('id');
+
+            $.ajax({
+                url: "{% url 'reduce_cart_item' %}",
+                type: 'POST',
+                data: {
+                    item_id: itemId,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'  // CSRF token
+                },
+                success: function() {
+                    updateCart();
+                },
+                error: function() {
+                    console.log('Error reducing item quantity');
+                }
+            });
+        });
+        // Ürün adedini düşürme işlemi
+        $(document).on('click', '.plus-quantity', function(e) {
+            e.preventDefault();
+            const itemId = $(this).data('id');
+
+            $.ajax({
+                url: "{% url 'plus_cart_item' %}",
+                type: 'POST',
+                data: {
+                    item_id: itemId,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'  // CSRF token
+                },
+                success: function() {
+                    updateCart();
+                },
+                error: function() {
+                    console.log('Error reducing item quantity');
+                }
+            });
+        });
+
+        // Ürünü sepetten silme işlemi
+        $(document).on('click', '.remove-item', function(e) {
+            e.preventDefault();
+            const itemId = $(this).data('id');
+
+            $.ajax({
+                url: "{% url 'remove_cart_item' %}",
+                type: 'POST',
+                data: {
+                    item_id: itemId,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'  // CSRF token
+                },
+                success: function() {
+                    updateCart();
+                },
+                error: function() {
+                    console.log('Error removing item from cart');
+                }
+            });
+        });
+    });
+</script>

@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    İletisim - {{ block.super }}
+{% endblock %}
+
+{% block body %}
+
+
+
+<div id="content" class="mt-5">
+
+    <!-- Page Title -->
+    <div class="page-title bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 offset-lg-4">
+                    <h1 class="mb-0">İletişim</h1>
+                    <h4 class="text-muted mb-0">İletişim Adreslerimiz</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section -->
+    <section class="section">
+
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-12">
+                    <img src="assets/img/logo-horizontal-dark.svg" alt="" class="mb-5" width="130">
+                    <h4 class="mb-0">Bibilenedanış</h4>
+                    <span class="text-muted">Kirazlıdere Mah. Eski Ankara Cad. A-1 Blok No: 4a İç Kapı No: 1 Dijitalpark-Teknokent,
+                        Çekmeköy/İstanbul</span>
+                    <hr class="hr-md">
+                    <div class="row">
+                        <div class="col-sm-6 mb-3 mb-sm-0">
+                            <h6 class="mb-1 text-muted">Telefon:</h6>
+                            +90 (537) 213 6078
+                        </div>
+                        <div class="col-sm-6">
+                            <h6 class="mb-1 text-muted">E-mail:</h6>
+                            <a href="#">pw@bibilenedanis.com
+                            </a>
+                        </div>
+                    </div>
+                    <hr class="hr-md">
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Section -->
+
+    
+    <!-- Footer / End -->
+
+</div>
+
+
+
+
+{% include 'components/cart.html' %}
+{% endblock %}
